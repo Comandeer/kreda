@@ -71,7 +71,7 @@ import { styleText } from 'node:util';
 
 test( 'kreda supports multiple text parts', ( t ) => {
 	const actual = kreda.red( 'red', 'text' );
-	const expected = styleText( 'red', 'red text' )
+	const expected = styleText( 'red', 'red text' );
 
 	t.is( actual, expected );
 } );

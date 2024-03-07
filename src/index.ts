@@ -70,10 +70,10 @@ function createProxy( modifiers: Array<string> ): Kreda {
 	fn.modifiers = modifiers;
 
 	return new Proxy( fn, {
-		get( target: KredaFn, property: string, receiver ) {
+		get( target: KredaFn, property: string ): Kreda {
 			return createProxy( [ ...modifiers, property ] );
 		},
-		apply( target: KredaFn, thisArg: unknown, args: Array<string> ) {
+		apply( target: KredaFn, thisArg: unknown, args: Array<string> ): string {
 			return style( target.modifiers, ...args );
 		}
 	} ) as unknown as Kreda;
@@ -90,5 +90,3 @@ function style( formats: Array<string>, ...textParts: Array<string> ): string {
 
 	return styledText;
 }
-
-
