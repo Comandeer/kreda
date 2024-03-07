@@ -19,8 +19,8 @@
     "build": "rlb",
     "lint": "eslint \"./src\" \"./tests\"",
     "test": "c8 ava",
-    "version": "pnpm test && pnpm run build && git add -f bin/ dist/",
-    "postversion": "git rm -r --cached bin/ dist/ && git commit -m \"chore(dist): clean after release [ci skip]\" && git push origin && git push origin --tags"
+    "version": "npm test && npm run build && git add -f dist/",
+    "postversion": "git rm -r --cached dist/ && git commit -m \"chore(dist): clean after release [ci skip]\" && git push origin && git push origin --tags"
   },
   "repository": {
     "type": "git",
