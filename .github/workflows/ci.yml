@@ -25,13 +25,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - name: Enable Corepack
-        run: corepack enable pnpm
-      - name: Install pnpm
-        run: corepack prepare pnpm@latest-8 --activate
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: npm ci
       - name: Lint code
-        run: pnpm lint
+        run: npm run lint
       - name: Run tests
-        run: pnpm --recursive test
+        run: npm test
