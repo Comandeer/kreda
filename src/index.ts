@@ -58,23 +58,15 @@ export interface Kreda {
 	bgWhiteBright: Kreda;
 }
 
-class KredaFn extends Function {
-	modifiers: Array<string> = [];
-}
-
 export default createProxy( [] );
 
 function createProxy( modifiers: Array<string> ): Kreda {
-	const fn = new KredaFn();
-
-	fn.modifiers = modifiers;
-
-	return new Proxy( fn, {
-		get( target: KredaFn, property: string ): Kreda {
+	return new Proxy( () => {}, {
+		get( target: Kreda, property: string ): Kreda {
 			return createProxy( [ ...modifiers, property ] );
 		},
-		apply( target: KredaFn, thisArg: unknown, args: Array<string> ): string {
-			return style( target.modifiers, ...args );
+		apply( target: Kreda, thisArg: unknown, args: Array<string> ): string {
+			return style( modifiers, ...args );
 		}
 	} ) as unknown as Kreda;
 }
