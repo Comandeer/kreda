@@ -36,3 +36,12 @@ test( 'kreda correctly overrides modifiers', ( t ) => {
 
 	t.is( actual, expected );
 } );
+
+test( 'kreda throws when non-existent modifier is provided', ( t ) => {
+	t.throws( () => {
+		// @ts-expect-error
+		kreda.whatever;
+	}, {
+		instanceOf: ReferenceError
+	} );
+} );
