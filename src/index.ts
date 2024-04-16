@@ -1,63 +1,8 @@
 import { styleText } from 'node:util';
-
-const validModifiers = [
-	'reset',
-	'bold',
-	'italic',
-	'underline',
-	'strikethrough',
-	'strikeThrough',
-	'crossedout',
-	'crossedOut',
-	'hidden',
-	'conceal',
-	'dim',
-	'faint',
-	'overlined',
-	'blink',
-	'inverse',
-	'doubleunderline',
-	'framed',
-	'black',
-	'red',
-	'green',
-	'yellow',
-	'blue',
-	'magenta',
-	'cyan',
-	'white',
-	'gray',
-	'grey',
-	'blackBright',
-	'redBright',
-	'greenBright',
-	'yellowBright',
-	'blueBright',
-	'magentaBright',
-	'cyanBright',
-	'whiteBright',
-	'bgBlack',
-	'bgRed',
-	'bgGreen',
-	'bgYellow',
-	'bgBlue',
-	'bgMagenta',
-	'bgCyan',
-	'bgWhite',
-	'bgGray',
-	'bgGrey',
-	'bgBlackBright',
-	'bgRedBright',
-	'bgGreenBright',
-	'bgYellowBright',
-	'bgBlueBright',
-	'bgMagentaBright',
-	'bgCyanBright',
-	'bgWhiteBright'
-] as const;
+import allowedModifiers from './modifiers.js';
 
 type KredaModifiers = {
-	[ k in typeof validModifiers[ number ] ]: Kreda;
+	[ k in typeof allowedModifiers[ number ] ]: Kreda;
 };
 
 export type Kreda = KredaModifiers & ( ( ...text: Array<string> ) => string );
