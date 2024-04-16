@@ -1,62 +1,9 @@
-import test from 'ava';
-import kreda, { Kreda } from '../src/index.js';
 import { styleText } from 'node:util';
+import test from 'ava';
+import kreda from '../src/index.js';
+import modifiers from '../src/modifiers.js';
 
-( [
-	'reset',
-	'bold',
-	'italic',
-	'underline',
-	'strikethrough',
-	'strikeThrough',
-	'crossedout',
-	'crossedOut',
-	'hidden',
-	'conceal',
-	'dim',
-	'faint',
-	'overlined',
-	'blink',
-	'inverse',
-	'doubleunderline',
-	'framed',
-	'black',
-	'red',
-	'green',
-	'yellow',
-	'blue',
-	'magenta',
-	'cyan',
-	'white',
-	'gray',
-	'grey',
-	'blackBright',
-	'redBright',
-	'greenBright',
-	'yellowBright',
-	'blueBright',
-	'magentaBright',
-	'cyanBright',
-	'whiteBright',
-	'bgBlack',
-	'bgRed',
-	'bgGreen',
-	'bgYellow',
-	'bgBlue',
-	'bgMagenta',
-	'bgCyan',
-	'bgWhite',
-	'bgGray',
-	'bgGrey',
-	'bgBlackBright',
-	'bgRedBright',
-	'bgGreenBright',
-	'bgYellowBright',
-	'bgBlueBright',
-	'bgMagentaBright',
-	'bgCyanBright',
-	'bgWhiteBright'
-] satisfies Array<keyof Kreda> ).forEach( ( modifier ) => {
+modifiers.forEach( ( modifier ) => {
 	test( `kreda.${ modifier }() is a function`, ( t ) => {
 		t.is( typeof kreda[ modifier ], 'function' );
 	} );
@@ -88,4 +35,13 @@ test( 'kreda correctly overrides modifiers', ( t ) => {
 	const expected = styleText( 'red', styleText( 'blue', 'test' ) );
 
 	t.is( actual, expected );
+} );
+
+test( 'kreda throws when non-existent modifier is provided', ( t ) => {
+	t.throws( () => {
+		// @ts-expect-error
+		kreda.whatever;
+	}, {
+		instanceOf: ReferenceError
+	} );
 } );

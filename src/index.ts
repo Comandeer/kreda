@@ -1,68 +1,21 @@
 import { styleText } from 'node:util';
+import allowedModifiers from './modifiers.js';
 
-export interface Kreda {
-	( ...text: Array<string> ): string;
+type KredaModifiers = {
+	[ k in typeof allowedModifiers[ number ] ]: Kreda;
+};
 
-	reset: Kreda;
-	bold: Kreda;
-	italic: Kreda;
-	underline: Kreda;
-	strikethrough: Kreda;
-	strikeThrough: Kreda;
-	crossedout: Kreda;
-	crossedOut: Kreda;
-	hidden: Kreda;
-	conceal: Kreda;
-	dim: Kreda;
-	faint: Kreda;
-	overlined: Kreda;
-	blink: Kreda;
-	inverse: Kreda;
-	doubleunderline: Kreda;
-	framed: Kreda;
-	black: Kreda;
-	red: Kreda;
-	green: Kreda;
-	yellow: Kreda;
-	blue: Kreda;
-	magenta: Kreda;
-	cyan: Kreda;
-	white: Kreda;
-	gray: Kreda;
-	grey: Kreda;
-	blackBright: Kreda;
-	redBright: Kreda;
-	greenBright: Kreda;
-	yellowBright: Kreda;
-	blueBright: Kreda;
-	magentaBright: Kreda;
-	cyanBright: Kreda;
-	whiteBright: Kreda;
-	bgBlack: Kreda;
-	bgRed: Kreda;
-	bgGreen: Kreda;
-	bgYellow: Kreda;
-	bgBlue: Kreda;
-	bgMagenta: Kreda;
-	bgCyan: Kreda;
-	bgWhite: Kreda;
-	bgGray: Kreda;
-	bgGrey: Kreda;
-	bgBlackBright: Kreda;
-	bgRedBright: Kreda;
-	bgGreenBright: Kreda;
-	bgYellowBright: Kreda;
-	bgBlueBright: Kreda;
-	bgMagentaBright: Kreda;
-	bgCyanBright: Kreda;
-	bgWhiteBright: Kreda;
-}
+export type Kreda = KredaModifiers & ( ( ...text: Array<string> ) => string );
 
 export default createProxy( [] );
 
 function createProxy( modifiers: Array<string> ): Kreda {
 	return new Proxy( () => {}, {
-		get( target: Kreda, property: string ): Kreda {
+		get( target: Kreda, property: string ): Kreda | undefined {
+			if ( !allowedModifiers.includes( property as unknown as typeof allowedModifiers[ number ] ) ) {
+				throw createReferenceError( property );
+			}
+
 			return createProxy( [ ...modifiers, property ] );
 		},
 		apply( target: Kreda, thisArg: unknown, args: Array<string> ): string {
@@ -81,4 +34,12 @@ function style( formats: Array<string>, ...textParts: Array<string> ): string {
 	}
 
 	return styledText;
+}
+
+function createReferenceError( modifier: string ): ReferenceError {
+	const availableModifiers = allowedModifiers.join( ', ' );
+
+	return new ReferenceError(
+		`Passed '${ modifier }' modifier is incorrect. Modifier must be one of the ${ availableModifiers }.`
+	);
 }
