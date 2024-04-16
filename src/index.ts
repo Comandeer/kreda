@@ -1,62 +1,66 @@
 import { styleText } from 'node:util';
 
-export interface Kreda {
-	( ...text: Array<string> ): string;
+const validModifiers = [
+	'reset',
+	'bold',
+	'italic',
+	'underline',
+	'strikethrough',
+	'strikeThrough',
+	'crossedout',
+	'crossedOut',
+	'hidden',
+	'conceal',
+	'dim',
+	'faint',
+	'overlined',
+	'blink',
+	'inverse',
+	'doubleunderline',
+	'framed',
+	'black',
+	'red',
+	'green',
+	'yellow',
+	'blue',
+	'magenta',
+	'cyan',
+	'white',
+	'gray',
+	'grey',
+	'blackBright',
+	'redBright',
+	'greenBright',
+	'yellowBright',
+	'blueBright',
+	'magentaBright',
+	'cyanBright',
+	'whiteBright',
+	'bgBlack',
+	'bgRed',
+	'bgGreen',
+	'bgYellow',
+	'bgBlue',
+	'bgMagenta',
+	'bgCyan',
+	'bgWhite',
+	'bgGray',
+	'bgGrey',
+	'bgBlackBright',
+	'bgRedBright',
+	'bgGreenBright',
+	'bgYellowBright',
+	'bgBlueBright',
+	'bgMagentaBright',
+	'bgCyanBright',
+	'bgWhiteBright'
+] as const;
 
-	reset: Kreda;
-	bold: Kreda;
-	italic: Kreda;
-	underline: Kreda;
-	strikethrough: Kreda;
-	strikeThrough: Kreda;
-	crossedout: Kreda;
-	crossedOut: Kreda;
-	hidden: Kreda;
-	conceal: Kreda;
-	dim: Kreda;
-	faint: Kreda;
-	overlined: Kreda;
-	blink: Kreda;
-	inverse: Kreda;
-	doubleunderline: Kreda;
-	framed: Kreda;
-	black: Kreda;
-	red: Kreda;
-	green: Kreda;
-	yellow: Kreda;
-	blue: Kreda;
-	magenta: Kreda;
-	cyan: Kreda;
-	white: Kreda;
-	gray: Kreda;
-	grey: Kreda;
-	blackBright: Kreda;
-	redBright: Kreda;
-	greenBright: Kreda;
-	yellowBright: Kreda;
-	blueBright: Kreda;
-	magentaBright: Kreda;
-	cyanBright: Kreda;
-	whiteBright: Kreda;
-	bgBlack: Kreda;
-	bgRed: Kreda;
-	bgGreen: Kreda;
-	bgYellow: Kreda;
-	bgBlue: Kreda;
-	bgMagenta: Kreda;
-	bgCyan: Kreda;
-	bgWhite: Kreda;
-	bgGray: Kreda;
-	bgGrey: Kreda;
-	bgBlackBright: Kreda;
-	bgRedBright: Kreda;
-	bgGreenBright: Kreda;
-	bgYellowBright: Kreda;
-	bgBlueBright: Kreda;
-	bgMagentaBright: Kreda;
-	bgCyanBright: Kreda;
-	bgWhiteBright: Kreda;
-}
+type KredaModifiers = {
+	[ k in typeof validModifiers[ number ] ]: Kreda;
+};
+
+export type Kreda = KredaModifiers & ( ( ...text: Array<string> ) => string );
 
 export default createProxy( [] );
 

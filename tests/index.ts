@@ -56,7 +56,7 @@ import { styleText } from 'node:util';
 	'bgMagentaBright',
 	'bgCyanBright',
 	'bgWhiteBright'
-] satisfies Array<keyof Kreda> ).forEach( ( modifier ) => {
+] as const satisfies Array<keyof Kreda> ).forEach( ( modifier ) => {
 	test( `kreda.${ modifier }() is a function`, ( t ) => {
 		t.is( typeof kreda[ modifier ], 'function' );
 	} );
