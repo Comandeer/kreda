@@ -4,7 +4,7 @@
 		"declaration": false,
 		"esModuleInterop": true,
 		"exactOptionalPropertyTypes": true,
-		"importHelpers": true,
+		"importHelpers": false,
 		"incremental": true,
 		"lib": [
 			"es2023"
